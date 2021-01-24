@@ -41,6 +41,8 @@ class ativo:
 
             self.linhas = []
 
+            self.operando = False
+
     def candle_60(self, dias=150):
         #dias = len(self.dados_60[2])
         data = np.stack((self.dados_60[2].T[-dias:],

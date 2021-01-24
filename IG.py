@@ -70,6 +70,11 @@ class Window(QWidget):                      #A classe window herda todos os mét
         self.tra_btn.setCheckable(True)
         self.tra_btn.clicked.connect(self.btn_t)
 
+        self.ope_btn = QPushButton('Operando')
+        self.ope_btn.setMaximumWidth(80)
+        self.ope_btn.setCheckable(True)
+        self.ope_btn.clicked.connect(self.btn_o)
+
     def createGraph60(self, int = 0, first = False):
         plt.pyplot.close('all')
 
@@ -117,6 +122,7 @@ class Window(QWidget):                      #A classe window herda todos os mét
         grid.addWidget(self.dia_btn, 11, 0, Qt.AlignCenter)
         grid.addWidget(self.sem_btn, 12, 0, Qt.AlignCenter)
         grid.addWidget(self.tra_btn, 12, 8, Qt.AlignCenter)
+        grid.addWidget(self.ope_btn, 11, 8, Qt.AlignCenter)
         grid.addWidget(self.graph,0,1,13,1)
         grid.addWidget(self.toolbar,13,1)
         grid.addWidget(self.box1, 0, 8)
@@ -207,7 +213,12 @@ class Window(QWidget):                      #A classe window herda todos os mét
         row = self.tableWidget.currentItem().row()
         self.createGraphd(row)
 
-        situacoes = self.ativos[self.tableWidget.currentItem().row()].relatorio(formatado = True)
+        situacoes = self.ativos[row].relatorio(formatado = True)
+
+        if(self.ativos[row].operando):
+            self.ope_btn.setChecked(True)
+        else:
+            self.ope_btn.setChecked(False)
 
         font = QFont()
 
@@ -305,3 +316,16 @@ class Window(QWidget):                      #A classe window herda todos os mét
             self.point1 = 0
             self.point2 = 0
             self.lab5.setText('Esperando: Ponto 1')
+
+    def btn_o(self):
+        font = QFont()
+        row = self.tableWidget.currentItem().row()
+
+        if self.ope_btn.isChecked():
+            self.ativos[self.tableWidget.currentItem().row()].operando = True
+            font.setBold(True)
+
+        else:
+            font.setBold(False)
+            self.ativos[self.tableWidget.currentItem().row()].operando = False
+        self.tableWidget.item(row,0).setFont(font)
