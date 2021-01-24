@@ -44,11 +44,15 @@ class Window(QWidget):                      #A classe window herda todos os mét
         self.tableWidget.setMaximumHeight(500)
 
         self.tableWidget.setHorizontalHeaderItem(0, QTableWidgetItem("Ações"))
+        font = QFont()
+        font.setBold(True)
 
         i = 0
         for i in range(len(self.ativos)):
             self.tableWidget.setItem(i,0, QTableWidgetItem(self.ativos[i].nome))
             self.tableWidget.item(i,0).setTextAlignment(Qt.AlignCenter)
+            if (self.ativos[i].operando):
+                self.tableWidget.item(i,0).setFont(font)
 
         self.tableWidget.itemSelectionChanged.connect(self.acao_click)
 
@@ -320,12 +324,23 @@ class Window(QWidget):                      #A classe window herda todos os mét
     def btn_o(self):
         font = QFont()
         row = self.tableWidget.currentItem().row()
+        operando = np.load('Operando.npy', allow_pickle = True)
+        result = np.where(operando[0,:] == self.ativos[row].nome)
 
         if self.ope_btn.isChecked():
             self.ativos[self.tableWidget.currentItem().row()].operando = True
             font.setBold(True)
-
+            if(len(result[0]) > 0):
+                operando[1,result[0][0]] = '1'
+            else:
+                operando = np.append(operando, np.array([[self.ativos[self.tableWidget.currentItem().row()].nome],['1']]), axis=1)
         else:
             font.setBold(False)
             self.ativos[self.tableWidget.currentItem().row()].operando = False
+            if(len(result[0]) > 0):
+                operando[1,result[0][0]] = '0'
+            else:
+                operando = np.append(operando, np.array([[self.ativos[self.tableWidget.currentItem().row()].nome],['0']]), axis=1)
+
         self.tableWidget.item(row,0).setFont(font)
+        np.save("Operando.npy", operando)
