@@ -6,7 +6,7 @@ from auxiliar import *
 from IG import *
 
 #Nomes de todos os ativos no diretório
-dir = 'C:/Users/dreba/Desktop/Livros/Projeto de férias/Bolsa - Python/Data'
+dir = 'C:/Users/dreba/Desktop/Livros/Projeto de férias/Bolsa - Python/Data2'
 ativos_dir = os.listdir(dir)
 
 #Lista com objetos da classe pychart
@@ -15,7 +15,7 @@ total = len(ativos_dir)
 
 print("Carregando dados...")
 operando = np.load('Operando.npy', allow_pickle = True)
-print(operando)
+
 print("Corregando ativos ...")
 for at in ativos_dir:
     ativos.append(pc.ativo(at, os.path.basename(dir)))
