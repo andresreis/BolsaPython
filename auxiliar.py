@@ -387,6 +387,13 @@ def gerar_relatorio(ativos):
     rel = pd.DataFrame(data=rel, columns=['Ativo', 'Médias D', 'Média S', 'Tps e Fds D'])
 
 def criar_risco(x1, x2, y1, y2, tam):
+    if (x1 > x2):
+        temp = x1
+        x1 = x2
+        x2 = temp
+        temp = y1
+        y1 = y2
+        y2 = temp
     lista = np.full(tam, np.nan)
     a = (y2-y1)/(x2-x1)
     b = y1
