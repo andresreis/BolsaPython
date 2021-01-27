@@ -1,0 +1,8 @@
+Data/
+Data2
+DataTeste
+Tracos/
+aux.py
+Icon.ico
+Operando.npy
+ProfitReis.bat
