@@ -1,8 +1,11 @@
-Data/
+Data/*
+!Data/ABCB4F_B_0_60min.csv
 Data2/
 DataTeste/
 Icon.ico
 ProfitReis.bat
-Tracos/
+Tracos/*
+!Tracos/MGLU3F.npy
+
 aux.py
 __pycache__/
